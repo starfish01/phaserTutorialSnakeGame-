@@ -1,7 +1,7 @@
 var snake, apple, squareSize, score, speed,
     updateDelay, direction, new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, 
-    textStyle_Key, textStyle_Value;
+    textStyle_Key, textStyle_Value, bgColor;
 
 var Game = {
 
@@ -10,6 +10,7 @@ var Game = {
         // In our case, that's just two squares - one for the snake body and one for the apple.
         game.load.image('snake', './assets/images/snake.png');
         game.load.image('apple', './assets/images/apple.png');
+       bgColor = '#00b8ff';
     },
 
     create : function() {
@@ -55,6 +56,9 @@ var Game = {
     },
 
     update: function() {
+        
+
+        
         if (cursors.right.isDown && direction!='left')
     {
         new_direction = 'right';
@@ -74,7 +78,9 @@ var Game = {
 
     // A formula to calculate game speed based on the score.
     // The higher the score, the higher the game speed, with a maximum of 10;
-    speed = Math.min(10, Math.floor(score/5));
+    
+    //speed = 10;
+    speed = Math.min(10, Math.floor(score/1));
     // Update speed value on game screen.
     speedTextValue.text = '' + speed;
 
@@ -130,6 +136,7 @@ var Game = {
         
         if(addNew){
             snake.unshift(game.add.sprite(oldLastCellx, oldLastCelly, 'snake'));
+            
             addNew = false;
         }
 
@@ -161,11 +168,23 @@ var Game = {
     
     
     appleCollision: function() {
+        
+        
 
     // Check if any part of the snake is overlapping the apple.
     // This is needed if the apple spawns inside of the snake.
     for(var i = 0; i < snake.length; i++){
         if(snake[i].x == apple.x && snake[i].y == apple.y){
+            
+        
+       
+       if(bgColor == '#00b8ff'){
+           bgColor = '#FF0000';
+       }else{
+           bgColor = '#00b8ff';
+       }
+        
+        game.stage.backgroundColor = bgColor;
 
             // Next time the snake moves, a new block will be added to its length.
             addNew = true;
